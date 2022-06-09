@@ -1,0 +1,143 @@
+
+Packet Tracer PC Command Line 1.0
+C:\>ping 172.31.0.254
+
+Pinging 172.31.0.254 with 32 bytes of data:
+
+Reply from 172.31.1.1: Destination host unreachable.
+Reply from 172.31.1.1: Destination host unreachable.
+Reply from 172.31.1.1: Destination host unreachable.
+Request timed out.
+
+Ping statistics for 172.31.0.254:
+    Packets: Sent = 4, Received = 0, Lost = 4 (100% loss),
+
+C:\>ping 172.31.1.190
+
+Pinging 172.31.1.190 with 32 bytes of data:
+
+Reply from 172.31.1.1: Destination host unreachable.
+Reply from 172.31.1.1: Destination host unreachable.
+Request timed out.
+Reply from 172.31.1.1: Destination host unreachable.
+
+Ping statistics for 172.31.1.190:
+    Packets: Sent = 4, Received = 0, Lost = 4 (100% loss),
+
+C:\>
+
+
+R1:
+R1>
+R1>
+R1>
+R1>en
+R1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R1(config)#ip route 172.31.0.0 255.255.255.0 172.31.1.193
+R1(config)#ip route 172.31.1.196 255.255.255.252 172.31.1.193
+R1(config)#ip route 172.31.1.128 255.255.255.192 172.31.1.193
+R1(config)#
+
+
+C:\>ping 172.31.0.254
+
+Pinging 172.31.0.254 with 32 bytes of data:
+
+Request timed out.
+Request timed out.
+Request timed out.
+Request timed out.
+
+Ping statistics for 172.31.0.254:
+    Packets: Sent = 4, Received = 0, Lost = 4 (100% loss),
+
+
+R2:
+R2>
+R2>
+R2>
+R2>en
+R2#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R2(config)#ip route 172.31.1.0 255.255.255.128 s0/0/0
+%Default route without gateway, if not a point-to-point interface, may impact performance
+R2(config)#
+R2(config)#
+R2(config)#ip route 172.31.1.128 255.255.255.192 S0/0/1
+%Default route without gateway, if not a point-to-point interface, may impact performance
+R2(config)#
+R2(config)#
+
+R2(config)#exit
+R2#
+%SYS-5-CONFIG_I: Configured from console by console
+
+R2#
+R2#
+R2#
+R2#show ip route
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, E - EGP
+       i - IS-IS, L1 - IS-IS level-1, L2 - IS-IS level-2, ia - IS-IS inter area
+       * - candidate default, U - per-user static route, o - ODR
+       P - periodic downloaded static route
+
+Gateway of last resort is not set
+
+     172.31.0.0/16 is variably subnetted, 8 subnets, 5 masks
+C       172.31.0.0/24 is directly connected, GigabitEthernet0/0
+L       172.31.0.1/32 is directly connected, GigabitEthernet0/0
+S       172.31.1.0/25 is directly connected, Serial0/0/0
+S       172.31.1.128/26 is directly connected, Serial0/0/1
+C       172.31.1.192/30 is directly connected, Serial0/0/0
+L       172.31.1.193/32 is directly connected, Serial0/0/0
+C       172.31.1.196/30 is directly connected, Serial0/0/1
+L       172.31.1.197/32 is directly connected, Serial0/0/1
+
+R2#
+
+
+R3:
+
+R3>
+R3>
+R3>
+R3>en
+R3#conf t
+ 
+	
+R3(config)#ip route 0.0.0.0 0.0.0.0 s0/0/1
+R3(config)#
+R3(config)#
+R3(config)#
+R3(config)#show ip route
+            ^
+% Invalid input detected at '^' marker.
+	
+R3(config)#
+R3(config)#exit
+R3#
+%SYS-5-CONFIG_I: Configured from console by console
+
+R3#show ip route
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, E - EGP
+       i - IS-IS, L1 - IS-IS level-1, L2 - IS-IS level-2, ia - IS-IS inter area
+       * - candidate default, U - per-user static route, o - ODR
+       P - periodic downloaded static route
+
+Gateway of last resort is 0.0.0.0 to network 0.0.0.0
+
+     172.31.0.0/16 is variably subnetted, 4 subnets, 3 masks
+C       172.31.1.128/26 is directly connected, GigabitEthernet0/0
+L       172.31.1.129/32 is directly connected, GigabitEthernet0/0
+C       172.31.1.196/30 is directly connected, Serial0/0/1
+L       172.31.1.198/32 is directly connected, Serial0/0/1
+S*   0.0.0.0/0 is directly connected, Serial0/0/1
+
+R3#

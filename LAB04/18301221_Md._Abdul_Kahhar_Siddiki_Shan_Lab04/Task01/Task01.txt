@@ -1,0 +1,98 @@
+Part01:--------
+Step01:
+PC-1:
+C:\>ipconfig /all
+
+PC-3:
+C:\>ipconfig /all
+
+C:\>ping 10.10.1.18
+------------------------------------------------
+Step02:
+C:\>tracert 10.10.1.18
+
+Router R1:
+Password: cisco
+
+R1>en
+Password: class
+R1#show ip interface brief
+R1#show ip route
+
+Router R3:
+Password: cisco
+R3#show ip interface brief
+R3#show ip route
+
+Router R2:
+Password: cisco
+
+R2>en
+Password: class
+R2#show ip interface brief
+
+
+
+
+------------------------------------------------
+Step03:
+R2#configure ter
+Enter configuration commands, one per line.  End with CNTL/Z.
+R2(config)#interface s0/0/0
+R2(config-if)#ip address 10.10.1.5 255.255.255.252
+R2(config-if)#
+%DUAL-5-NBRCHANGE: IP-EIGRP 1: Neighbor 10.10.1.6 (Serial0/0/0) is up: new adjacency
+
+R2(config-if)#no shutdown
+R2(config-if)#
+------------------------------------------------
+Step04:
+------------------------------------------------
+Step05:
+PC-01:
+C:\>ping 10.10.1.18
+PC-01:
+C:\>ping 10.10.1.98
+------------------------------------------------
+Step06:
+
+###################################################################################################
+Part02:
+Step01:
+PC-2:
+C:\>ipv6config /all
+PC-4:
+C:\>ipv6config /all
+
+C:\>ping 2001:DB8:1:4::2
+------------------------------------------------
+Step02:
+PC-2:
+C:\>ping 2001:DB8:1:4::2
+C:\>tracert 2001:DB8:1:4::2
+
+PC-4:
+2001:DB8:1:1::2
+C:\>tracert 2001:DB8:1:1::2
+
+Router R3:
+Password: cisco
+
+R3>en
+Password: class
+R3#show ipv6 interface brief
+------------------------------------------------
+Step03:
+------------------------------------------------
+Step04:
+------------------------------------------------
+Step05:
+
+PC-2:
+C:\>ping 2001:DB8:1:4::2
+
+PC-4:
+C:\>ping 2001:DB8:1:1::2
+
+------------------------------------------------
+Step06:

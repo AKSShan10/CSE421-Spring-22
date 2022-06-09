@@ -1,0 +1,57 @@
+Part01:
+Router R2:
+Step01:
+R2>en
+R2#conf t
+R2(config)#ip dhcp excluded-address 192.168.10.1 192.168.10.10
+R2(config)#ip dhcp excluded-address 192.168.30.1 192.168.30.10
+--------------------------------------------------------------
+Step02:
+R2(config)#ip dhcp pool R1-LAN
+R2(dhcp-config)#network 192.168.10.0 255.255.255.0
+R2(dhcp-config)#default-router 192.168.10.1
+R2(dhcp-config)#dns-server 192.168.20.254
+R2(dhcp-config)#exit
+
+---------------------------------------------------------------------------
+Step03:
+R2(config)#ip dhcp pool R3-LAN
+R2(dhcp-config)#network 192.168.30.0 255.255.255.0
+R2(dhcp-config)#default-router 192.168.30.1 
+R2(dhcp-config)#dns-server 192.168.20.254
+
+#############################################################################
+Part02:
+Step01:
+Router R1:
+R1>en
+R1#config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R1(config)#
+R1(config)#
+R1(config)#int g0/0
+R1(config-if)#ip helper-address 10.1.1.2
+
+
+Router R3:
+R3>en
+R3#config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R3(config)#int g0/0
+R3(config-if)#ip helper-address 10.2.2.2
+---------------------------------------------------------------------------
+Step02:
+#############################################################################
+Part03:
+R2>en
+R2#config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R2(config)#int g0/1
+R2(config-if)#ip address dhcp
+R2(config-if)#no shutdown
+R2#show ip interface brief
+
+
+#############################################################################
+Part04:
+C:\>ping 192.168.10.1

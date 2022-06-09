@@ -1,0 +1,87 @@
+R1>
+R1>
+R1>
+R1>en
+R1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R1(config)#
+R1(config)#ip route 0.0.0.0 0.0.0.0 s0/0/1
+%Default route without gateway, if not a point-to-point interface, may impact performance
+R1(config)#router rip
+R1(config-router)#version 2
+R1(config-router)#no auto-summary
+R1(config-router)#network 192.168.1.0
+R1(config-router)#network 192.168.2.0
+R1(config-router)#passive-interface g0/0
+R1(config-router)#default-information originate
+R1(config-router)#exit
+R1(config)#exit
+R1#
+%SYS-5-CONFIG_I: Configured from console by console
+
+R1#
+R1#
+R1#copy run start
+Destination filename [startup-config]? 
+Building configuration...
+[OK]
+R1#
+R1#exit
+
+
+
+
+
+
+R2>
+R2>
+R2>
+R2>en
+R2#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R2(config)#router rip
+R2(config-router)#version 2
+R2(config-router)#no auto-summary
+R2(config-router)#network 192.168.2.0
+R2(config-router)#network 192.168.3.0
+R2(config-router)#network 192.168.4.0
+R2(config-router)#passive-interface g0/0
+R2(config-router)#exit
+R2(config)#exit
+R2#
+%SYS-5-CONFIG_I: Configured from console by console
+
+R2#
+R2#copy run start
+Destination filename [startup-config]? 
+Building configuration...
+[OK]
+R2#
+R2#
+
+
+R3>
+R3>
+R3>
+R3>en
+R3#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R3(config)#router rip
+R3(config-router)#version 2
+R3(config-router)#no auto-summary
+R3(config-router)#network 192.168.4.0
+R3(config-router)#network 192.168.5.0
+R3(config-router)#passive-interface g0/0
+R3(config-router)#exit
+R3(config)#exit
+R3#
+%SYS-5-CONFIG_I: Configured from console by console
+
+R3#
+R3#copy run start
+Destination filename [startup-config]? 
+Building configuration...
+[OK]
+R3#
+R3#
+R3#
